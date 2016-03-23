@@ -1,0 +1,20 @@
+<launch>
+
+  <arg name="image_topic"                   default="/snap_cam/highres/image" />   <!-- Topic on which to receive images -->
+
+  <!-- streaming settings -->
+  <arg name="stream_FPS"                    default="30" />                 <!-- Framerate of streamed video -->
+  <arg name="stream_IP"                     default="127.0.0.1" />        <!-- Destination IP of video stream -->
+  <arg name="stream_port"                   default="5000" />                  <!-- Destination port of video stream -->
+
+  <!--recording settings TODO-->
+
+  <node name="ros_gstreamer_node" pkg="ros_gstreamer" type="ros_gstreamer_node" output="screen">
+    <param name="image_topic"               type="string"   value="$(arg image_topic)" />
+
+    <param name="stream_FPS"                type="int"      value="$(arg stream_FPS)" />
+    <param name="stream_IP"                 type="string"   value="$(arg stream_IP)" />
+    <param name="stream_port"               type="int"      value="$(arg stream_port)" />
+  </node>
+
+</launch>
