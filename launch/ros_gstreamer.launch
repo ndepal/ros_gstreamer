@@ -4,26 +4,26 @@
 
   <!-- streaming settings -->
   <arg name="stream_FPS"                    default="30" />                                     <!-- Framerate of streamed video -->
-  <arg name="stream_resolution_width"       default="30" />                                     <!-- Resolution of streamed video, do not set (below) for original size-->
+  <arg name="stream_resolution_width"       default="320" />                                    <!-- TODO: QGC appears to only be able to deal with 320x240. Resolution of streamed video, for original size do not set (below)-->
   <arg name="stream_IP"                     default="127.0.0.1" />                              <!-- Destination IP of video stream -->
   <arg name="stream_port"                   default="5000" />                                   <!-- Destination port of video stream -->
 
   <!--recording settings -->
   <arg name="record_FPS"                    default="30" />                                     <!-- Framerate of recorded video, do not set (below) for same as streaming-->
-  <arg name="record_resolution_width"       default="30" />                                     <!-- Resolution of recorded video, do not set (below) for original size-->
+  <arg name="record_resolution_width"       default="320" />                                     <!-- Resolution of recorded video, for original size do not set (below)-->
   <arg name="record_filename"               default="$(find ros_gstreamer)/recording.mkv" />    <!-- Destination file of video recording. If the file exists, a number will be appended to the name to make it unique -->
-  <arg name="record_always"               default="false" />    <!-- Start recording immediately -->
+  <arg name="record_always"                 default="false" />    <!-- Start recording immediately -->
 
   <node name="ros_gstreamer_node" pkg="ros_gstreamer" type="ros_gstreamer_node" output="screen">
     <param name="image_topic"               type="string"   value="$(arg image_topic)" />
 
     <param name="stream_FPS"                type="int"      value="$(arg stream_FPS)" />
-<!--    <param name="stream_resolution_width"   type="int"      value="$(arg stream_resolution_width)" />-->
     <param name="stream_IP"                 type="string"   value="$(arg stream_IP)" />
     <param name="stream_port"               type="int"      value="$(arg stream_port)" />
+<!--    <param name="stream_resolution_width"   type="int"      value="$(arg stream_resolution_width)" />-->
 
-    <param name="record_FPS"                type="int"      value="$(arg record_FPS)" />
 <!--    <param name="record_resolution_width"   type="int"      value="$(arg record_resolution_width)" />-->
+    <param name="record_FPS"                type="int"      value="$(arg record_FPS)" />
     <param name="record_filename"           type="string"   value="$(arg record_filename)" />
     <param name="record_always"             type="bool"     value="$(arg record_always)" />
   </node>

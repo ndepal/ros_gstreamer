@@ -116,10 +116,13 @@ recording(false) {
 	std::stringstream stream_pipeline_ss;
 	stream_pipeline_ss << "appsrc name=source ! videoconvert ! "
 				<< "videorate ! video/x-raw, framerate=(fraction)" << stream_FPS << "/1 ! ";
-	if (stream_res_w)
-	{
-		stream_pipeline_ss << "videoscale ! video/x-raw,width=" << stream_res_w << " ! ";
-	}
+	// if (stream_res_w)
+	// {
+	// 	stream_pipeline_ss << "videoscale ! video/x-raw,width=" << stream_res_w << " ! ";
+	// }
+	// TODO: can qgc only accept 320x240?
+	stream_pipeline_ss << "videoscale ! video/x-raw,width=320,height=240 ! ";
+
 	stream_pipeline_ss << "x264enc speed-preset=ultrafast tune=zerolatency ! "
 				<< "video/x-h264, stream-format=(string)avc, alignment=(string)au, level=(string)2, profile=(string)high, framerate=(fraction)" << stream_FPS << "/1 ! "
 				<< "rtph264pay ! "
