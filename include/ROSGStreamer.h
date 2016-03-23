@@ -40,6 +40,7 @@
 #define ROS_GSTREAMER
 
 #include <ros/ros.h>
+#include <std_msgs/Bool.h>
 #include <sensor_msgs/Image.h>
 #include <gst/gst.h>
 #include <gst/app/app.h>
@@ -59,6 +60,8 @@ public:
 
     sensor_msgs::Image last_image;
 
+    void init_recording();
+    void stop_recording();
 
 private:
     GstElement *stream_pipeline, *stream_source;
@@ -67,8 +70,15 @@ private:
     GstMessage *msg;
     GstStateChangeReturn ret;
 
-    bool initialized;
-    void init(int height, int width);
+    bool stream_initialized;
+    void init_stream();
+    int original_width, original_height;
+
+    bool recording, record_always;
+    std::string out_file;
+    int record_FPS, record_res_w;
+    ros::Subscriber record_sub;
+    void recordCb(const std_msgs::Bool &msg);
 
     ros::NodeHandle nh;
 
@@ -76,5 +86,7 @@ private:
     void imgCb(const sensor_msgs::Image &msg);
     GstSample* gst_sample_new_from_image(const sensor_msgs::Image &msg);
     GstCaps* gst_caps_new_from_image(const sensor_msgs::Image &msg);
+
+    void determineFilePath(const std::string &path, std::string &unique_path);
 };
 #endif
